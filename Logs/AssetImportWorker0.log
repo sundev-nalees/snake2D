@@ -566,3 +566,4 @@ Received Import Request.
 Start importing Assets/sprits/Adumu.ttf using Guid(a9ee2f38dde533e4d86bb75de9306180) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a8056be3131774aba45f28581b309963') in 0.087321 seconds
   Import took 0.092440 seconds .
 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
