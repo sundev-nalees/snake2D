@@ -29,7 +29,7 @@ public class gameOver : MonoBehaviour
     }
     private void mainMenuScene()
     {
-        //SceneManager.LoadScene(levelN);
+        SceneManager.LoadScene(0);
         
 
     }

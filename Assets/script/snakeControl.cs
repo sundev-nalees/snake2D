@@ -102,6 +102,7 @@ public class snakeControl : MonoBehaviour
         segmentPos.z = -1;
         segment.position = segmentPos;
         segments.Add(segment);
+
         //segments.Add(segment);
         //segments.Add(segment);
         //segments.Add(segment);
@@ -119,6 +120,7 @@ public class snakeControl : MonoBehaviour
             segmentPos.z = -1;
             segment.position = segmentPos;
             segments.Remove(segment);
+            
 
         }
     }
@@ -128,6 +130,7 @@ public class snakeControl : MonoBehaviour
         if (other.tag == "Food")
         {
             Grow();
+            Score.scoreAmount += 1;
         }
         else if (other.tag == "obstacle")
         {
@@ -136,7 +139,9 @@ public class snakeControl : MonoBehaviour
         else if (other.tag == "Poision")
         {
             Shrink();
+            Score.scoreAmount -= 1;
         }
+        
        
     }
     void DeathCheck()
