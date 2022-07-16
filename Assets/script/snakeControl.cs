@@ -106,6 +106,22 @@ public class snakeControl : MonoBehaviour
         //segments.Add(segment);
         //segments.Add(segment);
     }
+    private void Shrink()
+    {
+        if (segments.Count<=initialSize)
+        {
+            gameOver.playerDead();
+        }
+        else if(segments.Count>initialSize)
+        {
+            Transform segment = Instantiate(this.segmentPrefab);
+            Vector3 segmentPos = segments[segments.Count - 1].position;
+            segmentPos.z = -1;
+            segment.position = segmentPos;
+            segments.Remove(segment);
+
+        }
+    }
    
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -116,6 +132,10 @@ public class snakeControl : MonoBehaviour
         else if (other.tag == "obstacle")
         {
             gameOver.playerDead();
+        }
+        else if (other.tag == "Poision")
+        {
+            Shrink();
         }
        
     }
