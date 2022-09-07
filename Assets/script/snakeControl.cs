@@ -11,6 +11,7 @@ public class snakeControl : MonoBehaviour
     private List<Transform> segments;
 
     public Transform segmentPrefab;
+    public GameObject body;
 
     public int initialSize = 4;
     bool canDie = true;
@@ -18,8 +19,12 @@ public class snakeControl : MonoBehaviour
     private void Start()
     {
         segments = new List<Transform>();
-        segments.Add(this.transform);
-        initialSegment();
+        
+        segments.Insert(0, transform);
+        for (int i = 0; i < initialSize; i++)
+        {
+            Grow();
+        }
     }
 
     private void Update()
@@ -27,46 +32,80 @@ public class snakeControl : MonoBehaviour
 
         playerControl();
 
-
+        DeathCheck();
     }
     private void FixedUpdate()
     {
         segmentOrder();
         movement();
-        DeathCheck();
+        
     }
     void playerControl()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        if (gameObject.tag == "Player1")
         {
-            if (direction!=Vector2.down)
+            if (Input.GetKeyDown(KeyCode.W))
             {
-                direction = Vector2.up;
+                if (direction != Vector2.down)
+                {
+                    direction = Vector2.up;
+                }
             }
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            if (direction != Vector2.up)
+            else if (Input.GetKeyDown(KeyCode.S))
             {
-                direction = Vector2.down;
-            }
+                if (direction != Vector2.up)
+                {
+                    direction = Vector2.down;
+                }
 
-        }
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            if (direction != Vector2.right)
+            }
+            else if (Input.GetKeyDown(KeyCode.A))
             {
-                direction = Vector2.left;
+                if (direction != Vector2.right)
+                {
+                    direction = Vector2.left;
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
+                if (direction != Vector2.left)
+                {
+                    direction = Vector2.right;
+                }
             }
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (gameObject.tag == "Player2")
         {
-            if (direction != Vector2.left)
+            if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                direction = Vector2.right;
+                if (direction != Vector2.down)
+                {
+                    direction = Vector2.up;
+                }
             }
-        }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                if (direction != Vector2.up)
+                {
+                    direction = Vector2.down;
+                }
 
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                if (direction != Vector2.right)
+                {
+                    direction = Vector2.left;
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                if (direction != Vector2.left)
+                {
+                    direction = Vector2.right;
+                }
+            }
+        }
     }
     void movement()
     {
@@ -81,13 +120,7 @@ public class snakeControl : MonoBehaviour
             
         }
     }
-    void initialSegment()
-    {
-        for(int i = 1; i < this.initialSize; i++)
-        {
-            segments.Add(Instantiate(this.segmentPrefab));
-        }
-    }
+    
     private float GetAngelFromVector(Vector2 dir)
     {
         float n = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
@@ -97,15 +130,13 @@ public class snakeControl : MonoBehaviour
     }
     private void Grow()
     {
-        Transform segment = Instantiate(this.segmentPrefab);
-        Vector3 segmentPos = segments[segments.Count - 1].position;
-        segmentPos.z = -1;
-        segment.position = segmentPos;
-        segments.Add(segment);
-
-        //segments.Add(segment);
-        //segments.Add(segment);
-        //segments.Add(segment);
+      
+        int listLength = segments.Count;
+        GameObject segment = Instantiate(body);
+        Vector3 position = segments[listLength - 1].transform.position;
+        position.z = 2;
+        segment.transform.position = position;
+        segments.Insert(segments.Count, segment.transform);
     }
     private void Shrink()
     {
@@ -115,16 +146,14 @@ public class snakeControl : MonoBehaviour
         }
         else if(segments.Count>initialSize)
         {
-            Transform segment = Instantiate(this.segmentPrefab);
-            Vector3 segmentPos = segments[segments.Count - 1].position;
-            segmentPos.z = -1;
-            segment.position = segmentPos;
-            segments.Remove(segment);
-            
+            Destroy(segments[segments.Count - 1].gameObject);
+            segments.RemoveAt(segments.Count - 1);
+
 
         }
     }
    
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Food")
@@ -142,8 +171,21 @@ public class snakeControl : MonoBehaviour
             Score.scoreAmount -= 1;
         }
         
-       
+
+
     }
+    private void OnTriggerEnter(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "P2_Body" && this.gameObject.tag == "Player1")
+        {
+            gameOver.playerDead();
+        }
+        else if (collision.gameObject.tag == "P1_Body" && this.gameObject.tag == "Player2")
+        {
+            gameOver.playerDead();
+        }
+    }
+
     void DeathCheck()
     {
         for (int i = 1; i < segments.Count; i++)

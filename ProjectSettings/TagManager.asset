@@ -8,6 +8,9 @@ TagManager:
   - obstacle
   - Player2
   - Poision
+  - Player1
+  - P1_Body
+  - P2_Body
   layers:
   - Default
   - TransparentFX
@@ -42,6 +45,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BackGround
+    uniqueID: 2932918615
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: over
+    uniqueID: 1434184169
     locked: 0
