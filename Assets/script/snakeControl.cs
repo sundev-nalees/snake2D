@@ -15,6 +15,7 @@ public class snakeControl : MonoBehaviour
 
     public int initialSize = 4;
     bool canDie = true;
+    Score score;
 
     private void Start()
     {
@@ -137,6 +138,7 @@ public class snakeControl : MonoBehaviour
         position.z = 2;
         segment.transform.position = position;
         segments.Insert(segments.Count, segment.transform);
+        
     }
     private void Shrink()
     {
@@ -148,7 +150,7 @@ public class snakeControl : MonoBehaviour
         {
             Destroy(segments[segments.Count - 1].gameObject);
             segments.RemoveAt(segments.Count - 1);
-
+            
 
         }
     }
@@ -156,35 +158,32 @@ public class snakeControl : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Food")
+        if (other.gameObject.tag == "Food")
         {
             Grow();
-            Score.scoreAmount += 1;
+
+            Score.instance.IncreaseScore();
         }
-        else if (other.tag == "obstacle")
+        else if (other.gameObject.tag == "obstacle")
         {
             gameOver.playerDead();
         }
-        else if (other.tag == "Poision")
+        else if (other.gameObject.tag == "Poision")
         {
             Shrink();
-            Score.scoreAmount -= 1;
+            Score.instance.DecreseScore();
         }
-        
-
-
-    }
-    private void OnTriggerEnter(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "P2_Body" && this.gameObject.tag == "Player1")
+        else if (other.gameObject.tag == "P2_Body" && this.gameObject.tag == "Player1")
         {
             gameOver.playerDead();
         }
-        else if (collision.gameObject.tag == "P1_Body" && this.gameObject.tag == "Player2")
+        else if (other.gameObject.tag == "P1_Body" && this.gameObject.tag == "Player2")
         {
             gameOver.playerDead();
         }
+
     }
+    
 
     void DeathCheck()
     {

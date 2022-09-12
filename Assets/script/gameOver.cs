@@ -9,6 +9,16 @@ public class gameOver : MonoBehaviour
     public Button restart;
     
     public Button mainMenu;
+
+    [SerializeField] Score Player1Score;
+    [SerializeField] Score Player2Score;
+    [SerializeField] GameObject p1Win;
+    [SerializeField] GameObject p2Win;
+
+    int p1Score;
+    int p2Score;
+
+
     private void Awake()
     {
         restart.onClick.AddListener(restartGame);
@@ -19,7 +29,16 @@ public class gameOver : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-
+        p1Score = Player1Score.GetActiveScore();
+        p2Score = Player2Score.GetActiveScore();
+        if (p1Score > p2Score)
+        {
+            p1Win.SetActive(true);
+        }
+        else
+        {
+            p2Win.SetActive(true);
+        }
     }
     private void restartGame()
     {

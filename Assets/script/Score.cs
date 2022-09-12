@@ -1,21 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Score : MonoBehaviour
 {
-    public static int scoreAmount;
-    private TextMesh scoreText;
-    // Start is called before the first frame update
-    void Start()
-    {
-        scoreText = GetComponent<TextMesh>();
-        scoreAmount = 0;
+    private int score = 0;
+
+    public static Score instance;
+
+    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] int scoreForGainer;
+    
+    private void Start()
+    { 
+        scoreText.text = gameObject.tag + "-" + score;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        scoreText.text = "Score:" + scoreAmount;
+        instance = this;
+    }
+
+    public void IncreaseScore()
+    {
+        score += scoreForGainer;
+        scoreText.text = gameObject.tag + "-" + score;
+    }
+    public void DecreseScore()
+    {
+        score -= scoreForGainer;
+        scoreText.text = gameObject.tag + "-" + score;
+    }
+    public void SetScoreForGainer(int score)
+    {
+        scoreForGainer = score;
+    }
+    public int GetScoreForGainer()
+    {
+        return scoreForGainer;
+    }
+
+    public int GetActiveScore()
+    {
+        return score;
     }
 }
