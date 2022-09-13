@@ -11,6 +11,7 @@ TagManager:
   - Player1
   - P1_Body
   - P2_Body
+  - PowerUp
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - PowerUps
   - 
   - 
   - 

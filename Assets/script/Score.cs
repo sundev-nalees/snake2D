@@ -14,6 +14,7 @@ public class Score : MonoBehaviour
     
     private void Start()
     { 
+
         scoreText.text = gameObject.tag + "-" + score;
     }
 

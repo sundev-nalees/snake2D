@@ -14,6 +14,8 @@ public class gameOver : MonoBehaviour
     [SerializeField] Score Player2Score;
     [SerializeField] GameObject p1Win;
     [SerializeField] GameObject p2Win;
+    [SerializeField] GameObject bAudio;
+    [SerializeField] GameObject gameOverAudio;
 
     int p1Score;
     int p2Score;
@@ -39,6 +41,8 @@ public class gameOver : MonoBehaviour
         {
             p2Win.SetActive(true);
         }
+        bAudio.SetActive(false);
+        gameOverAudio.SetActive(true);
     }
     private void restartGame()
     {
