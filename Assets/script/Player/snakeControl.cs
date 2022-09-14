@@ -154,14 +154,15 @@ public class snakeControl : MonoBehaviour
     }
     private void Grow()
     {
-      
-        int listLength = segments.Count;
-        GameObject segment = Instantiate(body);
-        Vector3 position = segments[listLength - 1].transform.position;
-        position.z = 2;
-        segment.transform.position = position;
-        segments.Insert(segments.Count, segment.transform);
-        
+        for (int i = 0; i < 2; i++)
+        {
+            int listLength = segments.Count;
+            GameObject segment = Instantiate(body);
+            Vector3 position = segments[listLength - 1].transform.position;
+            position.z = 2;
+            segment.transform.position = position;
+            segments.Insert(segments.Count, segment.transform);
+        }
     }
     private void Shrink()
     {
@@ -171,10 +172,12 @@ public class snakeControl : MonoBehaviour
         }
         else if(segments.Count>initialSize)
         {
-            Destroy(segments[segments.Count - 1].gameObject);
-            segments.RemoveAt(segments.Count - 1);
-            
+            for (int i = 0; i < 2; i++)
+            {
+                Destroy(segments[segments.Count - 1].gameObject);
+                segments.RemoveAt(segments.Count - 1);
 
+            }
         }
     }
     public void SetCanDie(bool value)
